@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="CalendarioApp.Views.CalendarioPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Calendário"
+             BackgroundColor="White">
+
+    <VerticalStackLayout Padding="10">
+
+        <!-- Cabeçalho com ícone, mês e navegação -->
+        <HorizontalStackLayout VerticalOptions="Center" Margin="0,0,0,10">
+            <BoxView Color="#42046582" WidthRequest="24" HeightRequest="24" CornerRadius="12" />
+            <Label Text="{Binding MesAnoString}" FontAttributes="Bold" FontSize="20" HorizontalOptions="CenterAndExpand" TextColor="#42046582" />
+            <Button Text="‹" Command="{Binding ComandoMesAnterior}" BackgroundColor="#42046582" TextColor="White" FontSize="18" CornerRadius="5" WidthRequest="30" />
+            <Button Text="›" Command="{Binding ComandoMesProximo}" BackgroundColor="#42046582" TextColor="White" FontSize="18" CornerRadius="5" WidthRequest="30" />
+        </HorizontalStackLayout>
+
+        <!-- Grid dos dias da semana e calendário -->
+        <Grid ColumnSpacing="1" RowSpacing="1" BackgroundColor="LightGray">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <!-- Cabeçalho dias da semana -->
+                <RowDefinition Height="*"/>
+                <!-- Linhas dos dias -->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Cabeçalho dos dias da semana -->
+            <Label Text="Dom" Grid.Row="0" Grid.Column="0" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Gray" TextColor="White" />
+            <Label Text="Seg" Grid.Row="0" Grid.Column="1" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Gray" TextColor="White" />
+            <Label Text="Ter" Grid.Row="0" Grid.Column="2" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Gray" TextColor="White" />
+            <Label Text="Qua" Grid.Row="0" Grid.Column="3" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Gray" TextColor="White" />
+            <Label Text="Qui" Grid.Row="0" Grid.Column="4" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Gray" TextColor="White" />
+            <Label Text="Sex" Grid.Row="0" Grid.Column="5" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Gray" TextColor="White" />
+            <Label Text="Sab" Grid.Row="0" Grid.Column="6" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Gray" TextColor="White" />
+
+            <!-- Container para a grid dinâmica dos dias -->
+            <Grid x:Name="DiasGrid" Grid.Row="1" ColumnSpacing="1" RowSpacing="1">
+                <!-- As células serão adicionadas via código -->
+            </Grid>
+        </Grid>
+
+        <!-- Lista de eventos do dia selecionado -->
+        <CollectionView ItemsSource="{Binding EventosDia}" Margin="0,10,0,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BackgroundColor="#42046582" CornerRadius="10" Padding="10" Margin="0,5" HasShadow="True">
+                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                            <BoxView Color="Gray" WidthRequest="35" HeightRequest="35" CornerRadius="17.5" />
+                            <VerticalStackLayout>
+                                <Label Text="{Binding NomeEvento}" TextColor="White" FontAttributes="Bold" />
+                                <Label Text="{Binding HorarioEvento}" TextColor="White" FontSize="12" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Botão Adicionar flutuante -->
+        <Button Text="+" WidthRequest="50" HeightRequest="50" 
+                CornerRadius="25" BackgroundColor="#42046582" 
+                TextColor="White" FontSize="24" HasShadow="True"
+                HorizontalOptions="End" VerticalOptions="End"
+                Command="{Binding ComandoAdicionarEvento}" />
+
+        <!-- Barra de navegação inferior -->
+        <HorizontalStackLayout BackgroundColor="#42046582" HeightRequest="60" Margin="0,10,0,0" HorizontalOptions="FillAndExpand" Spacing="40" VerticalOptions="End">
+            <BoxView Color="White" WidthRequest="30" HeightRequest="30" CornerRadius="15" />
+            <BoxView Color="White" WidthRequest="30" HeightRequest="30" CornerRadius="15" />
+            <BoxView Color="White" WidthRequest="30" HeightRequest="30" CornerRadius="15" />
+            <BoxView Color="White" WidthRequest="30" HeightRequest="30" CornerRadius="15" BackgroundColor="Transparent" />
+            <!-- Ativo, transparente -->
+            <BoxView Color="White" WidthRequest="30" HeightRequest="30" CornerRadius="15" />
+        </HorizontalStackLayout>
+
+    </VerticalStackLayout>
+
+</ContentPage>
